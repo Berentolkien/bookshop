@@ -31,6 +31,7 @@ class Product(models.Model):
     description = models.TextField(verbose_name='Description')
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Price')
     price_type = models.CharField(max_length=100, choices=price_type_choices, default='unitary')
+    stock = models.IntegerField(default=0)
 
     class Meta:
         verbose_name = 'Product'

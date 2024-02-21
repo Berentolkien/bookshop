@@ -11,7 +11,6 @@ class ProductFilter(filters.FilterSet):
         }
 
 
-
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product

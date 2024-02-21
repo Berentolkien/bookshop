@@ -37,9 +37,12 @@ onMounted(async () => {
   }
 });
 
-// Función para obtener la ruta de la categoría
 const getCategoryRoute = (category) => {
-  return `/categories/${category.name}`;
+  if (category.name === 'Library Items') {
+    return '/categories/library-items';
+  } else {
+    return `/categories/${category.name}`;
+  }
 };
 </script>
 
