@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from django_filters import rest_framework as filters
-from .models import Category, Product
-
+from .models import Category, Product, CarouselProduct
 
 class ProductFilter(filters.FilterSet):
     class Meta:
@@ -28,3 +27,9 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ['id', 'name', 'image', 'image_url', 'products']
+
+
+class CarouselProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CarouselProduct
+        fields = ['id', 'name', 'description', 'image']
