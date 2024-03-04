@@ -11,6 +11,7 @@
     <v-spacer></v-spacer>
     <v-text-field
       v-model="searchQuery"
+      @keyup.enter="performSearch"
       density="compact"
       variant="solo"
       label="Search products"
@@ -35,36 +36,48 @@
     </a>
   </v-app-bar>
 </template>
-  
-<script>
+
+<script setup>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
+
 import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiCartOutline } from '@mdi/js';
 
+const router = useRouter();
+const store = useStore();
 
-export default {
-  name: "my-component",
-  components: {
-    SvgIcon
-  },
-  data() {
-    return {
-       path: mdiCartOutline,
+const path = mdiCartOutline;
+
+let searchQuery = '';
+
+const cartIndicator = computed(() => store.state.cartItems.length);
+
+const performSearch = async () => {
+  try {
+    if (!searchQuery.trim()) {
+      // No realizar la búsqueda si la consulta está vacía
+      return;
     }
-  },
-  computed: {
-    cartIndicator() {
-      return this.$store.state.cartItems.length;
-    },
-  },
-  methods: {
-    redirectToAdminPanel() {
-      window.location.href = '/admin-access/';
-    }
+
+    const response = await axios.get(`http://127.0.0.1:8000/api/products/search/?q=${searchQuery}`);
+    console.log('API Response:', response.data);
+    const searchResults = response.data;
+    
+    // Actualizar los resultados de búsqueda en Vuex
+    store.dispatch('updateSearchResults', searchResults);
+
+    // Navegar a la vista de resultados de búsqueda
+    router.push({ name: 'search-results' });
+  } catch (error) {
+    console.log('Error performing search:', error);
   }
 }
 </script>
-  
-<style>
+
+<style scoped>
 .nav-link {
   text-decoration: none;
   color: #333;

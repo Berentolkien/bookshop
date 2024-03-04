@@ -14,6 +14,9 @@ export default createStore({
         state.cartItems.push(product);
       }
     },
+    setSearchResults(state, results) {
+      state.searchResults = results;
+    },
 
     addToPurchaseHistory(state, purchase) {
       state.purchaseHistory.push(purchase);
@@ -57,6 +60,9 @@ export default createStore({
     clearCart({ commit }) {
       commit('clearCart');
     },
+    updateSearchResults({ commit }, results) {
+      commit('setSearchResults', results);
+    },
   },
   getters: {
     cartItems(state) {
@@ -64,6 +70,9 @@ export default createStore({
     },
     subtotal(state) {
       return state.cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-    }
+    },
+    getSearchResults(state) {
+      return state.searchResults;
+    },
   },
 });

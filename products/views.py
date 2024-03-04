@@ -34,8 +34,12 @@ class ProductSearchView(APIView):
         search_query = request.query_params.get('q', '')
         if search_query:
             products = Product.objects.filter(Q(name__icontains=search_query) | Q(description__icontains=search_query))
-            serializer = ProductSerializer(products, many=True)
-            return Response(serializer.data)
+            serialized_products = []
+            for product in products:
+                serialized_product = ProductSerializer(product).data
+                serialized_product['image'] = request.build_absolute_uri(product.image.url)
+                serialized_products.append(serialized_product)
+            return Response(serialized_products)
         else:
             return Response("No search query provided", status=status.HTTP_400_BAD_REQUEST)
 

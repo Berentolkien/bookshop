@@ -50,9 +50,10 @@ const routes = [
     component: PaymentView
   },
   {
-    path: '/search',
-    name: 'search',
-    component: SearchItemView
+    path: '/search-results',
+    name: 'search-results',
+    component: SearchItemView,
+    props: true,
   }
 ]
 
