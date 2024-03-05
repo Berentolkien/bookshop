@@ -1,10 +1,21 @@
 <template>
-  <v-app-bar flat class="navbar">
+  <v-toolbar flat class="navbar">
     <template v-slot:prepend>
-      <router-link aria-current="page" to="/" class="nav-link">
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
-      </router-link>
-    </template>  
+    <v-app-bar-nav-icon @click="toggleMenu"></v-app-bar-nav-icon>
+    <v-menu v-model="menuOpen" offset-y>
+      <v-list>
+        <router-link class="nav-link" to="/" @click.native="handleItemClick('Home')">
+          <v-list-item link>Home</v-list-item>
+        </router-link>
+        <router-link class="nav-link" to="/categories" @click.native="handleItemClick('Categories')">
+          <v-list-item link>Categories</v-list-item>
+        </router-link>
+        <router-link class="nav-link" to="/products" @click.native="handleItemClick('Products')">
+          <v-list-item link>Products</v-list-item>
+        </router-link>
+      </v-list>
+    </v-menu>
+</template>  
     <router-link aria-current="page" to="/" class="nav-link">
       <v-app-bar-title>Phoenix BookShop</v-app-bar-title>
     </router-link>
@@ -34,7 +45,7 @@
     <a href="http://127.0.0.1:8000/admin/login/?next=/admin/" target="_blank" class="nav-link admin-link">
         Admin Access
     </a>
-  </v-app-bar>
+  </v-toolbar>
 </template>
 
 <script setup>
@@ -42,6 +53,8 @@ import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
+import { ref } from 'vue';
+
 
 import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiCartOutline } from '@mdi/js';
@@ -58,7 +71,6 @@ const cartIndicator = computed(() => store.state.cartItems.length);
 const performSearch = async () => {
   try {
     if (!searchQuery.trim()) {
-      // No realizar la búsqueda si la consulta está vacía
       return;
     }
 
@@ -66,15 +78,24 @@ const performSearch = async () => {
     console.log('API Response:', response.data);
     const searchResults = response.data;
     
-    // Actualizar los resultados de búsqueda en Vuex
     store.dispatch('updateSearchResults', searchResults);
 
-    // Navegar a la vista de resultados de búsqueda
     router.push({ name: 'search-results' });
   } catch (error) {
     console.log('Error performing search:', error);
   }
 }
+
+const menuOpen = ref(false);
+
+const toggleMenu = () => {
+  menuOpen.value = !menuOpen.value;
+};
+
+const handleItemClick = (option) => {
+  console.log('Clicked on:', option);
+  menuOpen.value = false;
+};
 </script>
 
 <style scoped>
@@ -107,6 +128,10 @@ const performSearch = async () => {
 .admin-link {
   margin-right: 10px;
   margin-left: 10px;
+}
+
+.v-menu {
+ margin-top: 60px;
 }
 </style>
 

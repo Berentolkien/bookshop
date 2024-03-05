@@ -12,13 +12,12 @@
             md="4"
             lg="4"
           >
-            <!-- Pasamos la propiedad 'quantity' al componente ProductCard -->
-            <ProductCard :product="product" :quantity="product.quantity" />
+          <ProductCard :product="product" :quantity="product.quantity" />
           </v-col>
         </v-row>
       </v-container>
       <div v-if="products && products.length === 0" class="no-results">
-        No se encontraron resultados.
+        No results found.
       </div>
     </div>
   </div>

@@ -1,6 +1,6 @@
 <template>
   <v-footer >
-    <v-card flat tile class=" white--text py-12 px-5" width="100%" color="rgb(8, 10, 23)">
+    <v-card flat tile class=" white--text py-12 px-5" width="100%" color="rgb(212, 214, 225)">
       <v-row>
         <v-col cols="12" xs="12" sm="6" md="4" class="pa-16">
           <div class="text-center">
@@ -51,5 +51,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.v-footer {
+  background-color: rgb(212, 214, 225);
+}
 </style>

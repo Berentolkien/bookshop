@@ -1,13 +1,12 @@
 <template>
   <v-row>
     <v-col cols="3" sm="3" v-for="(popular, i) in populars" :key="i">
-      <v-card class="mx-auto my-12 pb-4" max-width="374">
+      <router-link :to="{ name: 'books' }">
+      <v-card class="mx-auto my-12 pb-4 product-card" max-width="374">
         <v-img height="250" class="mx-4" :src="popular.img"></v-img>
-
         <v-card-item class="mt-n4">
           <v-card-title class="text-center">{{ popular.title }}</v-card-title>
         </v-card-item>
-
         <v-card-text>
           <div class="text-center">
             {{ popular.bio }}
@@ -26,6 +25,7 @@
           </v-row>
         </v-card-text>
       </v-card>
+    </router-link>
     </v-col>
   </v-row>
 </template>
@@ -58,3 +58,15 @@ export default {
   })
 }
 </script>
+
+<style scoped>
+.product-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+</style>

@@ -3,11 +3,12 @@
     <NavBar />
     <div class="products-container">
       <ul class="products-list">
-        <li v-for="product in products" :key="product.id" class="product-item">
+        <li v-for="product in displayedProducts" :key="product.id" class="product-item">
           <ProductCard :product="product" />
         </li>
       </ul>
     </div>
+    <v-pagination v-model="currentPage" :length="totalPages" @input="fetchProducts" />
     <Footer />
   </div>
 </template>
@@ -17,20 +18,28 @@ import NavBar from '@/components/NavBar.vue';
 import ProductCard from '@/components/ProductCard.vue';
 import Footer from '@/components/Footer.vue';
 import axios from 'axios';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 
 const products = ref([]);
+const currentPage = ref(1);
+const itemsPerPage = 8;
+onMounted(fetchProducts);
 
-onMounted(async () => {
+async function fetchProducts() {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/products/');
-    response.data.forEach(product => {
-      product.quantity = ref(1);
-    });
+    const response = await axios.get(`http://127.0.0.1:8000/api/products/?page=${currentPage.value}&limit=${itemsPerPage}`);
     products.value = response.data;
   } catch (error) {
     console.error('Error fetching products:', error);
   }
+}
+
+const totalPages = computed(() => Math.ceil(products.value.length / itemsPerPage));
+
+const displayedProducts = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  return products.value.slice(start, end);
 });
 </script>
 
@@ -45,4 +54,15 @@ onMounted(async () => {
   display: flex;
   justify-content: center;
 }
+
+.products-container {
+  margin-top: 20px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
 </style>
+
