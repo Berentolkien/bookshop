@@ -1,11 +1,11 @@
 {
   "name": "shop",
-  "version": "0.0.0",
-  "scripts": {
+  "version": "0.0.0","scripts": {
     "dev": "cross-env NODE_OPTIONS='--no-warnings' vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . --fix --ignore-path .gitignore"
+    "lint": "eslint . --fix --ignore-path .gitignore",
+    "start": "python manage.py runserver"
   },
   "dependencies": {
     "@jamescoyle/vue-icon": "^0.1.2",
