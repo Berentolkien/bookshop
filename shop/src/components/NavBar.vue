@@ -13,6 +13,9 @@
         <router-link class="nav-link" to="/products" @click.native="handleItemClick('Products')">
           <v-list-item link>Products</v-list-item>
         </router-link>
+        <router-link class="nav-link" to="/cart" @click.native="handleItemClick('Cart')">
+          <v-list-item link><svg-icon type="mdi" :path="path" class="carticon"></svg-icon></v-list-item>
+        </router-link>
       </v-list>
     </v-menu>
 </template>  
@@ -132,6 +135,26 @@ const handleItemClick = (option) => {
 
 .v-menu {
  margin-top: 60px;
+}
+
+@media screen and (max-width: 768px) {
+  .nav-button,
+  .cart-link,
+  .admin-link {
+    display: none;
+  }
+
+  .cart-indicator {
+    right: 10px;
+  }
+
+  .v-menu {
+    margin-top: 40px;
+  }
+
+  .nav-title {
+    display: inline-block;
+  }
 }
 </style>
 

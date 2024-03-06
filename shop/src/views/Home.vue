@@ -81,4 +81,11 @@ onMounted(async () => {
 .text-color {
   color: #f5f5f5;
 }
+
+@media screen and (max-width: 768px) {
+  .v-carousel-item {
+    max-width: 80%;
+    margin: auto;
+  }
+}
 </style>

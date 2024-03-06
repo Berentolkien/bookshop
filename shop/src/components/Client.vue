@@ -1,6 +1,6 @@
 <template>
   <v-row style="background-color: #080A21;">
-    <v-col cols="3" sm="3">
+    <v-col cols="12" sm="6" md="4" lg="3">
       <v-card class="mx-auto my-12 pb-4" max-width="374" flat color="#080A21">
         <v-card-item class="top-day">
           <v-card-title class="text-center">Deals of the day</v-card-title>
@@ -17,7 +17,7 @@
       </v-card>
     </v-col>
 
-    <v-col cols="3" sm="3" v-for="(client, i) in clients" :key="i">
+    <v-col cols="12" sm="6" md="4" lg="3" v-for="(client, i) in clients" :key="i">
       <router-link :to="{ name: 'books' }">
         <v-card class="mx-auto my-12 pb-4 product-card" max-width="374">
           <v-img height="250" class="mx-4" :src="client.img"></v-img>
@@ -119,12 +119,16 @@ export default {
   animation: spin 1.4s linear infinite;
 }
 
-@keyframes spin {
-  from {
-    transform: rotateX(0deg);
+@media screen and (max-width: 768px) {
+  .product-card {
+    max-width: 100%;
+    margin-bottom: 20px;
+    transform: none;
   }
-  to {
-    transform: rotateX(360deg);
+
+  .product-card:hover {
+    transform: translateY(-8px);
   }
 }
 </style>
+

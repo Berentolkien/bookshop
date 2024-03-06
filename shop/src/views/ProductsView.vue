@@ -1,36 +1,40 @@
 <template>
   <div>
     <NavBar />
-    <div class="products-container">
-      <ul class="products-list">
-        <li v-for="product in displayedProducts" :key="product.id" class="product-item">
+    <v-container>
+      <v-row>
+        <v-col v-for="product in displayedProducts" :key="product.id" cols="12" sm="6" md="4">
           <ProductCard :product="product" />
-        </li>
-      </ul>
-    </div>
+        </v-col>
+      </v-row>
+    </v-container>
     <v-pagination v-model="currentPage" :length="totalPages" @input="fetchProducts" />
     <Footer />
   </div>
 </template>
 
 <script setup>
-import NavBar from '@/components/NavBar.vue';
-import ProductCard from '@/components/ProductCard.vue';
+import NavBar from '../components/NavBar.vue';
 import Footer from '@/components/Footer.vue';
+import ProductCard from '../components/ProductCard.vue';
 import axios from 'axios';
 import { ref, onMounted, computed } from 'vue';
 
 const products = ref([]);
 const currentPage = ref(1);
-const itemsPerPage = 8;
+const itemsPerPage = 6;
+
 onMounted(fetchProducts);
 
 async function fetchProducts() {
   try {
-    const response = await axios.get(`http://127.0.0.1:8000/api/products/?page=${currentPage.value}&limit=${itemsPerPage}`);
+    const response = await axios.get(`http://127.0.0.1:8000/api/products/?category=23&page=${currentPage.value}&limit=${itemsPerPage}`);
+    response.data.forEach(product => {
+      product.quantity = ref(1);
+    });
     products.value = response.data;
   } catch (error) {
-    console.error('Error fetching products:', error);
+    console.error('Error fetching library items:', error);
   }
 }
 
@@ -42,27 +46,3 @@ const displayedProducts = computed(() => {
   return products.value.slice(start, end);
 });
 </script>
-
-<style scoped>
-.products-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-gap: 20px;
-}
-
-.product-item {
-  display: flex;
-  justify-content: center;
-}
-
-.products-container {
-  margin-top: 20px;
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-</style>
-

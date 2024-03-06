@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="3" sm="3" v-for="(feature, i) in featured" :key="i">
+    <v-col cols="12" sm="6" md="4" lg="3" v-for="(feature, i) in featured" :key="i">
       <router-link :to="{ name: 'products' }">
         <v-card class="mx-auto my-12 pb-4 product-card" max-width="374">
           <v-img height="250" class="mx-4" :src="feature.img"></v-img>
@@ -67,4 +67,16 @@ export default {
   transform: translateY(-8px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
+
+@media screen and (max-width: 768px) {
+  .product-card {
+    max-width: 100%;
+    transform: none;
+  }
+
+  .product-card:hover {
+    transform: translateY(-8px);
+  }
+}
 </style>
+

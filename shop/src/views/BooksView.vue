@@ -8,11 +8,13 @@
         </v-col>
       </v-row>
     </v-container>
+    <Footer />
   </div>
 </template>
   
 <script setup>
 import NavBar from '../components/NavBar.vue';
+import Footer from '@/components/Footer.vue';
 import ProductCard from '../components/ProductCard.vue';
 import axios from 'axios';
 import { ref, onMounted } from 'vue';

@@ -47,5 +47,5 @@ const backToMenu = () => {
   text-align: center;
   font-size: 40px;
 }
-  </style>
+</style>
   
